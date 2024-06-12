@@ -6,7 +6,6 @@ vim.cmd("set softtabstop=4")
 vim.cmd("set shiftwidth=4")
 
 vim.g.mapleader = " "
-
 vim.opt.smartindent = true
 vim.opt.wrap = false
 -- Dosen't keep highlight on searched words
@@ -16,11 +15,13 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 12
 -- Allow to copy paste in system clipboard
 vim.opt.clipboard = "unnamedplus"
--- Allow to copy everything inside a block of {}
-vim.keymap.set({ "n", "v" }, "v%", "[{v%")
--- Paste over a block without taking the lines into the copy buffer
-vim.keymap.set("x", "v%", '"_y[{V%')
 
+-- Keymaps
+
+-- Quick save
+vim.keymap.set("n", "<leader>w", ":w<CR>")
+
+-- Auto indent when entering insert mode
 local function smart_indent()
     local line = vim.api.nvim_get_current_line()
     if line == "" then
@@ -29,6 +30,16 @@ local function smart_indent()
         return "i"
     end
 end
+
+-- Blocks
+vim.keymap.set("n", "vù", "vib") -- Select all inside (
+vim.keymap.set("n", "v%", "vab") -- Select all inside + (
+vim.keymap.set("n", "v*", "viB") -- Select all inside {
+vim.keymap.set("n", "vµ", "vaB") -- Select all inside + {
+vim.keymap.set("n", "yù", "yib") 
+vim.keymap.set("n", "y%", "yab") 
+vim.keymap.set("n", "y*", "yiB") 
+vim.keymap.set("n", "yµ", "yaB") 
 
 -- Smart ident on insert mode on blank line
 -- expr = true says that it is an expression to evaluate and we take
@@ -53,13 +64,22 @@ vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
 -- Inlay hint toggle
 vim.keymap.set({ "n", "v" }, "<leader>hi", ":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>", {})
+
 -- Switch tabs
 vim.keymap.set("n", "<leader>to", ":tabe<CR>")
 vim.keymap.set("n", "<leader>tc", ":tabc<CR>")
 vim.keymap.set("n", "<leader>tp", ":tabp<CR>")
 vim.keymap.set("n", "<leader>tn", ":tabn<CR>")
+
+-- Navigation
+vim.keymap.set("n", "<C-Left>", "<C-w>h")
+vim.keymap.set("n", "<C-Right>", "<C-w>l")
+
 -- Return to beginning of first word on line instead of the complete beginning
 vim.keymap.set("n", "0", "0w")
+
+-- Begin replacement with word under cursor
+vim.keymap.set("n", "<leader>z", ":%s/<C-r><C-w>/")
 
 -- Create an augroup for the yank highlighting
 local augroup = vim.api.nvim_create_augroup("YankHighlight", {})

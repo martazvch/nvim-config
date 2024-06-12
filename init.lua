@@ -18,6 +18,4 @@ require("lazy").setup("plugins")
 
 -- Default theme
 vim.cmd.colorscheme("catppuccin-macchiato")
--- vim.cmd.colorscheme("tokyonight")
-
 
