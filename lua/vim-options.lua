@@ -21,8 +21,8 @@ vim.opt.clipboard = "unnamedplus"
 -- Quick save
 vim.keymap.set("n", "<leader>w", ":w<CR>")
 
--- Auto indent when entering insert mode
-local function smart_indent()
+-- Smart insert
+local function smart_insert()
     local line = vim.api.nvim_get_current_line()
     if line == "" then
         return "\"_cc"
@@ -31,55 +31,55 @@ local function smart_indent()
     end
 end
 
+-- expr = true says that it is an expression to evaluate
+vim.keymap.set("n", "i", smart_insert, { expr = true })
+
+-- Line concat
+vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "L", "kJ")
+
+-- Centered navigation
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- Centered go down, go up
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+
 -- Blocks
 vim.keymap.set("n", "vù", "vib") -- Select all inside (
 vim.keymap.set("n", "v%", "vab") -- Select all inside + (
 vim.keymap.set("n", "v*", "viB") -- Select all inside {
 vim.keymap.set("n", "vµ", "vaB") -- Select all inside + {
-vim.keymap.set("n", "yù", "yib") 
-vim.keymap.set("n", "y%", "yab") 
-vim.keymap.set("n", "y*", "yiB") 
-vim.keymap.set("n", "yµ", "yaB") 
+vim.keymap.set("n", "yù", "yib")
+vim.keymap.set("n", "y%", "yab")
+vim.keymap.set("n", "y*", "yiB")
+vim.keymap.set("n", "yµ", "yaB")
 
--- Smart ident on insert mode on blank line
--- expr = true says that it is an expression to evaluate and we take
--- the return value of the expression
-vim.keymap.set("n", "i", smart_indent, { expr = true })
-
--- Allow to move selected lines up and down
-vim.keymap.set("v", "J", "m: '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", "m: '>-2<CR>gv=gv")
--- Append the next line to the previous one without moving the cursor
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
--- When moving to next searched term, keep the cursor at the middle of the file
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- Registers
 -- Paste without replacing the copy buffer
 vim.keymap.set("x", "<leader>p", '"_dP')
 -- Copy into system clipboard so we can paste outside nvim
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 -- Delete into void registry
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
+
 -- Inlay hint toggle
-vim.keymap.set({ "n", "v" }, "<leader>hi", ":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>", {})
+vim.keymap.set({ "n", "v" }, "<leader>hi", ":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>")
 
 -- Switch tabs
-vim.keymap.set("n", "<leader>to", ":tabe<CR>")
-vim.keymap.set("n", "<leader>tc", ":tabc<CR>")
-vim.keymap.set("n", "<leader>tp", ":tabp<CR>")
-vim.keymap.set("n", "<leader>tn", ":tabn<CR>")
+vim.keymap.set("n", "to", ":tabe<CR>")
+vim.keymap.set("n", "tc", ":tabc<CR>")
+vim.keymap.set("n", "tp", ":tabp<CR>")
+vim.keymap.set("n", "tn", ":tabn<CR>")
 
 -- Navigation
 vim.keymap.set("n", "<C-Left>", "<C-w>h")
 vim.keymap.set("n", "<C-Right>", "<C-w>l")
 
--- Return to beginning of first word on line instead of the complete beginning
-vim.keymap.set("n", "0", "0w")
-
--- Begin replacement with word under cursor
-vim.keymap.set("n", "<leader>z", ":%s/<C-r><C-w>/")
+-- Begin replacement with word under cursor until EOF or whole file
+vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
+vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
 
 -- Create an augroup for the yank highlighting
 local augroup = vim.api.nvim_create_augroup("YankHighlight", {})
