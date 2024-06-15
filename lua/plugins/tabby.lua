@@ -28,14 +28,6 @@ local function lsp_diag(buf)
     return vim.bo[buf].modified and "" or ""
 end
 
--- local function get_modified(buf)
---     if vim.bo[buf].modified then
---         return ''
---     else
---         return ''
---     end
--- end
-
 local function buffer_name(buf)
     if string.find(buf,"NvimTree") then
         return "NvimTree"

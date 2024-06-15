@@ -12,6 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("vim-options")
+require("diagnostics")
 
 -- Allow to move selected lines up and down
 require("lazy").setup("plugins")
