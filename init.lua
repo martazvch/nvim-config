@@ -17,6 +17,9 @@ require("diagnostics")
 -- Allow to move selected lines up and down
 require("lazy").setup("plugins")
 
+-- Must be initialized after lsp
+require("lsp_lines").setup()
+
 -- Default theme
 vim.cmd.colorscheme("catppuccin-macchiato")
 

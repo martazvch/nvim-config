@@ -132,4 +132,4 @@ local load_session = function()
 	end
 end
 
-vim.keymap.set("n", "<leader>ls", load_session)
+vim.keymap.set("n", "<leader>sl", load_session)

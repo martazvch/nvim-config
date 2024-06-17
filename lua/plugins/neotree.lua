@@ -54,7 +54,7 @@ return {
                 {
                     event = "file_opened",
                     handler = function()
-                        vim.cmd("neotree toggle")
+                        vim.cmd("Neotree toggle")
                     end
                 },
             }
