@@ -1,3 +1,6 @@
+-- https://www.reddit.com/r/neovim/comments/1cx05ws/spawning_lsp_servers_fails_regularly/
+local bin_path = "C:/Users/33634/AppData/Local/nvim-data/mason/bin/"
+
 return {
 	{
 		"williamboman/mason.nvim",
@@ -39,6 +42,7 @@ return {
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
                 on_attach = on_attach,
+                cmd = { bin_path .. "lua-language-server.cmd" },
 			})
 
             -- Rust config via rustacean

@@ -21,5 +21,6 @@ require("lazy").setup("plugins")
 require("lsp_lines").setup()
 
 -- Default theme
-vim.cmd.colorscheme("catppuccin-macchiato")
+-- vim.cmd.colorscheme("catppuccin-macchiato")
+vim.cmd.colorscheme("everforest")
 
