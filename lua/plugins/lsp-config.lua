@@ -30,7 +30,7 @@ return {
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
                 vim.keymap.set({ "n", "v" }, "ca", vim.lsp.buf.code_action, opts)
                 -- Show a tab with all symbols of workspace and we can jump to them
-                vim.keymap.set({ "n", "v" }, "ws", vim.lsp.buf.workspace_symbol, opts)
+                vim.keymap.set({ "n", "v" }, "ds", vim.lsp.buf.workspace_symbol, opts)
                 -- Open a file dialog with diagnostic of element under cursor
                 vim.keymap.set({ "n", "v" }, "di", vim.diagnostic.open_float, opts)
                 -- Go to next element in file that has a diagnostic
@@ -53,9 +53,9 @@ return {
 
                         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                        vim.keymap.set({ "n", "v" }, "ca", vim.lsp.buf.code_action, opts)
+                        vim.keymap.set({ "n", "v" }, "da", vim.lsp.buf.code_action, opts)
                         -- Show a tab with all symbols of workspace and we can jump to them
-                        vim.keymap.set({ "n", "v" }, "ws", vim.lsp.buf.workspace_symbol, opts)
+                        vim.keymap.set({ "n", "v" }, "ds", vim.lsp.buf.workspace_symbol, opts)
                         -- Open a file dialog with diagnostic of element under cursor
                         vim.keymap.set({ "n", "v" }, "di", vim.diagnostic.open_float, opts)
                         -- Go to next element in file that has a diagnostic
