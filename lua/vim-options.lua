@@ -23,12 +23,12 @@ vim.keymap.set("n", "<leader>w", ":w<CR>")
 
 -- Smart insert
 local function smart_insert()
-    local line = vim.api.nvim_get_current_line()
-    if line == "" then
-        return "\"_cc"
-    else
-        return "i"
-    end
+	local line = vim.api.nvim_get_current_line()
+	if line == "" then
+		return '"_cc'
+	else
+		return "i"
+	end
 end
 
 -- expr = true says that it is an expression to evaluate
@@ -56,6 +56,22 @@ vim.keymap.set("n", "y%", "yab")
 vim.keymap.set("n", "y*", "yiB")
 vim.keymap.set("n", "yµ", "yaB")
 
+-- Paragraph utils from current line
+-- Copy paste paragraphe under
+vim.keymap.set("n", "cp", "yap}p")
+-- Delete paragraphe
+vim.keymap.set("n", "dp", "^d}")
+-- Copy paragraphe
+vim.keymap.set("n", "yp", "^y}")
+
+-- When writting in snippets
+--  exit insert mode, jump to next section and erase until ,
+vim.keymap.set("i", "<M-;>", "<Esc>wwct,")
+--  exit insert mode, jump to next section and erase until )
+vim.keymap.set("i", "<M-:>", "<Esc>wwct)")
+-- Exit insert mode to go end of line and go back in insert mode
+vim.keymap.set("i", "<A-!>", "<Esc>A")
+
 -- Registers
 -- Paste without replacing the copy buffer
 vim.keymap.set("x", "<leader>p", '"_dP')
@@ -81,6 +97,13 @@ vim.keymap.set("n", "<C-Right>", "<C-w>l")
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
 vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
 
+-- Exit terminal mode
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+
+-- Exit insert mode (alt+ p)
+vim.keymap.set("i", "<M-e>", "<Esc>:w<CR>")
+
+
 -- Create an augroup for the yank highlighting
 local augroup = vim.api.nvim_create_augroup("YankHighlight", {})
 
@@ -89,19 +112,18 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = augroup,
 	pattern = "*",
 	callback = function()
-
 		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 200 })
 	end,
 })
 
 -- Set up persistent undo
 if vim.fn.has("persistent_undo") == 1 then
-  local target_path = vim.fn.expand('~/.config/nvim/undodir')
-  if vim.fn.isdirectory(target_path) == 0 then
-    vim.fn.mkdir(target_path, "p", 0700)
-  end
-  vim.opt.undodir = target_path
-  vim.opt.undofile = true
+	local target_path = vim.fn.expand("~/.config/nvim/undodir")
+	if vim.fn.isdirectory(target_path) == 0 then
+		vim.fn.mkdir(target_path, "p", 0700)
+	end
+	vim.opt.undodir = target_path
+	vim.opt.undofile = true
 end
 
 ------------------------------------------------------
