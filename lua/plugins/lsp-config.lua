@@ -48,8 +48,6 @@ return {
             lspconfig.zls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
-                -- cmd = {"zls"},
-                -- root_dir = lspconfig.util.root_pattern("zls.json", "build.zig", ".git"),
             })
 
             -- NOTE:https://github.com/zigtools/zls/issues/856#issuecomment-1511528925

@@ -13,8 +13,10 @@ vim.opt.hlsearch = false
 -- Allow to search like: /vim.in*
 vim.opt.incsearch = true
 vim.opt.scrolloff = 12
+vim.opt.fillchars = 'eob: '
 -- Allow to copy paste in system clipboard
 vim.opt.clipboard = "unnamedplus"
+vim.keymap.set("i", "<C-v>", "<C-R>*")
 
 -- Keymaps
 
@@ -97,12 +99,31 @@ vim.keymap.set("n", "<C-Right>", "<C-w>l")
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
 vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
 
+-- Begin replacement in all file with selected text
+vim.keymap.set("v", "<leader>!", function()
+	-- Yank the selected text (without affecting other yanks) and get it from the unnamed register
+	vim.cmd('normal! "vy')
+	-- Get the selected text in visual mode
+	local selected_text = vim.fn.escape(vim.fn.getreg('"'), "/\\")
+	-- Enter command-line mode and pre-fill with search and replace text
+	vim.api.nvim_feedkeys(":%s/" .. selected_text .. "/", "n", false)
+end, { desc = "Search and replace selected text" })
+
+-- Begin replacement in all file with selected text
+vim.keymap.set("v", "<leader>:", function()
+	-- Yank the selected text (without affecting other yanks) and get it from the unnamed register
+	vim.cmd('normal! "vy')
+	-- Get the selected text in visual mode
+	local selected_text = vim.fn.escape(vim.fn.getreg('"'), "/\\")
+	-- Enter command-line mode and pre-fill with search and replace text
+	vim.api.nvim_feedkeys(":,$s/" .. selected_text .. "/", "n", false)
+end, { desc = "Search and replace selected text" })
+
 -- Exit terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 
 -- Exit insert mode (alt+ p)
 vim.keymap.set("i", "<M-e>", "<Esc>:w<CR>")
-
 
 -- Create an augroup for the yank highlighting
 local augroup = vim.api.nvim_create_augroup("YankHighlight", {})

@@ -10,10 +10,10 @@ return {
                     -- Define custom mappings
                     mappings = {
                         i = { -- Insert mode mappings
-                            ["<A-t>"] = actions.select_vertical,
+                            ["<A-y>"] = actions.select_vertical,
                         },
                         n = { -- Normal mode mappings
-                            ["<A-t>"] = actions.select_vertical,
+                            ["<A-y>"] = actions.select_vertical,
                         },
                     },
                 }

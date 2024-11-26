@@ -22,5 +22,33 @@ require("lsp_lines").setup()
 
 -- Default theme
 vim.cmd.colorscheme("catppuccin-frappe")
--- vim.cmd.colorscheme("everforest")
 
+-- Toogles between transparent bg or not
+local toggle_transp_bg = function()
+    local opts = require("catppuccin").options
+    local bg = not opts.transparent_background
+    opts.transparent_background = bg
+
+	require("catppuccin").setup(opts)
+	vim.cmd.colorscheme("catppuccin-frappe")
+
+    if bg then
+        vim.cmd("hi Normal guibg=NONE ctermbg=NONE") -- focused buffer
+        vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE") -- unfocused buffer
+        vim.cmd("hi TelescopeSelection guibg=#414559 guifg=#c6d0f5") -- normal mode with catppuccin
+
+        -- NeoTree
+        -- vim.cmd("hi NeoTreeNormal guibg=NONE")
+        -- vim.cmd("hi NeoTreeNormalNC guibg=NONE")
+        -- vim.cmd("hi NeoTreeWinSeparator guibg=NONE")
+    end
+
+    -- Hack to make it always same color
+    vim.cmd("hi Beacon guibg=grey")
+end
+
+vim.keymap.set("n", "<leader>b", toggle_transp_bg, { expr = true })
+vim.api.nvim_create_user_command('ToggleTranspBg', toggle_transp_bg, {})
+
+-- Transparent on startup
+toggle_transp_bg()

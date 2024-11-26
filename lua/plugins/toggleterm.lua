@@ -8,7 +8,7 @@ return {
             persist_mode = false,
         })
 
-        vim.keymap.set("n", "<A-t>", ":ToggleTerm<CR>")
-        vim.keymap.set("t", "<A-t>", "<C-\\><C-n>:ToggleTerm<CR>")
+        vim.keymap.set("n", "<A-z>", ":ToggleTerm<CR>")
+        vim.keymap.set("t", "<A-z>", "<C-\\><C-n>:ToggleTerm<CR>")
     end,
 }

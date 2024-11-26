@@ -5,4 +5,5 @@ return {
 
         require("colorizer").setup()
     end,
+    lazy = true,
 }

@@ -25,6 +25,7 @@ return {
 	{
 		"folke/tokyonight.nvim",
 		priority = 1000,
+		lazy = true,
 		config = function()
 			require("tokyonight").setup({
 				styles = {
@@ -38,6 +39,7 @@ return {
 	{
 		"rebelot/kanagawa.nvim",
 		priority = 1000,
+		lazy = true,
 		config = function()
 			require("kanagawa").setup({
 				commentStyle = { italic = false },
@@ -47,8 +49,8 @@ return {
 	},
 	{
 		"neanias/everforest-nvim",
+		lazy = true,
 		priority = 1000,
-		lazy = false,
 		config = function()
 			require("everforest").setup({
 				background = "hard",
@@ -59,9 +61,14 @@ return {
 	},
 	{
 		"EdenEast/nightfox.nvim",
-		priority = 1000,
+		lazy = true,
 	},
-    {
-        "sam4llis/nvim-tundra",
-    }
+	{
+		"sam4llis/nvim-tundra",
+		lazy = true,
+	},
+	{
+		"rose-pine/neovim",
+		lazy = true,
+	},
 }
