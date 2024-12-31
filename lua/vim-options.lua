@@ -73,7 +73,7 @@ vim.keymap.set("i", "<M-;>", "<Esc>wwct,")
 --  exit insert mode, jump to next section and erase until )
 vim.keymap.set("i", "<M-:>", "<Esc>wwct)")
 -- Exit insert mode to go end of line and go back in insert mode
-vim.keymap.set("i", "<A-!>", "<Esc>A")
+vim.keymap.set("i", "<M-!>", "<Esc>A")
 
 -- Registers
 -- Paste without replacing the copy buffer
@@ -132,7 +132,7 @@ end, { desc = "Search and replace selected text" })
 -- Exit terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 
--- Exit insert mode (alt+ p)
+-- Exit insert mode
 vim.keymap.set("i", "<M-e>", "<Esc>:w<CR>")
 
 -- Create an augroup for the yank highlighting

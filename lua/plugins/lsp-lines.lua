@@ -1,6 +1,6 @@
 local function toggle_lsp_lines()
     require('lsp_lines').toggle()
-    
+
     -- Deactivate end of line diagnostics to avoid double msg
     vim.diagnostic.config({
         virtual_text = not vim.diagnostic.config().virtual_text,
