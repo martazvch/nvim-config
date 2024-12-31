@@ -45,6 +45,7 @@ local theme = {
 
 return {
     "nanozuki/tabby.nvim",
+    enabled = false,
     config = function ()
         require("tabby").setup({
             option = {

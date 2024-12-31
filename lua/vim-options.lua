@@ -4,6 +4,7 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=4")
 vim.cmd("set softtabstop=4")
 vim.cmd("set shiftwidth=4")
+vim.cmd("set showtabline=0") -- 0: never
 
 vim.g.mapleader = " "
 vim.opt.smartindent = true
@@ -13,7 +14,7 @@ vim.opt.hlsearch = false
 -- Allow to search like: /vim.in*
 vim.opt.incsearch = true
 vim.opt.scrolloff = 12
-vim.opt.fillchars = 'eob: '
+vim.opt.fillchars = "eob: "
 -- Allow to copy paste in system clipboard
 vim.opt.clipboard = "unnamedplus"
 vim.keymap.set("i", "<C-v>", "<C-R>*")
@@ -76,7 +77,8 @@ vim.keymap.set("i", "<A-!>", "<Esc>A")
 
 -- Registers
 -- Paste without replacing the copy buffer
-vim.keymap.set("x", "<leader>p", '"_dP')
+-- vim.keymap.set("x", "<leader>p", '"_dP')
+vim.keymap.set("x", "p", '"_dP')
 -- Copy into system clipboard so we can paste outside nvim
 vim.keymap.set({ "n", "v" }, "<leader>y", '"+y')
 -- Delete into void registry
@@ -98,6 +100,14 @@ vim.keymap.set("n", "<C-Right>", "<C-w>l")
 -- Begin replacement with word under cursor until EOF or whole file
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
 vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
+
+
+-- Mimic the behavior of "Crtl-d" in VSCode in normal and visual mode
+vim.keymap.set("n", "<leader>r", function()
+	vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
+	return "cgn"
+end, { silent = true, expr = true })
+
 
 -- Begin replacement in all file with selected text
 vim.keymap.set("v", "<leader>!", function()

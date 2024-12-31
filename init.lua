@@ -21,7 +21,9 @@ require("lazy").setup("plugins")
 require("lsp_lines").setup()
 
 -- Default theme
-vim.cmd.colorscheme("catppuccin-frappe")
+-- vim.cmd.colorscheme("catppuccin-frappe")
+-- vim.cmd.colorscheme("nordic")
+vim.cmd.colorscheme("kanagawa")
 
 -- Toogles between transparent bg or not
 local toggle_transp_bg = function()
@@ -50,5 +52,6 @@ end
 vim.keymap.set("n", "<leader>b", toggle_transp_bg, { expr = true })
 vim.api.nvim_create_user_command('ToggleTranspBg', toggle_transp_bg, {})
 
+vim.cmd("hi Beacon guibg=grey")
 -- Transparent on startup
-toggle_transp_bg()
+-- toggle_transp_bg()
