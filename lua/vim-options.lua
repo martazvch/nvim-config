@@ -94,8 +94,13 @@ vim.keymap.set("n", "tp", ":tabp<CR>")
 vim.keymap.set("n", "tn", ":tabn<CR>")
 
 -- Navigation
-vim.keymap.set("n", "<C-Left>", "<C-w>h")
-vim.keymap.set("n", "<C-Right>", "<C-w>l")
+if vim.loop.os_uname().sysname == "Windows_NT" then
+    vim.keymap.set("n", "<C-Left>", "<C-w>h")
+    vim.keymap.set("n", "<C-Right>", "<C-w>l")
+else
+    vim.keymap.set("n", "<M-h>", "<C-w>h")
+    vim.keymap.set("n", "<M-l>", "<C-w>l")
+end
 
 -- Begin replacement with word under cursor until EOF or whole file
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
