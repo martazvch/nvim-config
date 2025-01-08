@@ -18,10 +18,19 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		dependencies = { "saghen/blink.cmp" },
 
+		-- example using `opts` for defining servers
+		opts = {
+			servers = {
+				lua_ls = {},
+				zls = {},
+				["rust-analyzer"] = {},
+			},
+		},
+		config = function(_, opts)
 			local lspconfig = require("lspconfig")
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			local on_attach = function(client, bufnr)
 				local opts = { buffer = bufnr }
@@ -93,3 +102,47 @@ return {
 		end,
 	},
 }
+-- 	{
+-- 		"neovim/nvim-lspconfig",
+-- 		config = function()
+-- 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+--
+-- 			local lspconfig = require("lspconfig")
+--
+-- 			local on_attach = function(client, bufnr)
+-- 				local opts = { buffer = bufnr }
+--
+-- 				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+-- 				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+-- 				vim.keymap.set({ "n", "v" }, "za", vim.lsp.buf.code_action, opts)
+-- 				-- Show a tab with all symbols of workspace and we can jump to them
+-- 				vim.keymap.set({ "n", "v" }, "zs", vim.lsp.buf.workspace_symbol, opts)
+-- 				-- Open a file dialog with diagnostic of element under cursor
+-- 				vim.keymap.set({ "n", "v" }, "zi", vim.diagnostic.open_float, opts)
+-- 				-- Go to next element in file that has a diagnostic
+-- 				vim.keymap.set({ "n", "v" }, "zn", vim.diagnostic.goto_next, opts)
+-- 				-- Go to previous element in file that has a diagnostic
+-- 				vim.keymap.set({ "n", "v" }, "zp", vim.diagnostic.goto_prev, opts)
+-- 			end
+--
+-- 			local path = vim.loop.os_uname().sysname == "Windows_NT" and bin_path .. "lua-language-server.cmd"
+-- 				or "lua-language-server"
+--
+-- 			lspconfig.lua_ls.setup({
+-- 				capabilities = capabilities,
+-- 				on_attach = on_attach,
+-- 				cmd = { path },
+-- 			})
+--
+-- 			lspconfig.zls.setup({
+-- 				capabilities = capabilities,
+-- 				on_attach = on_attach,
+-- 			})
+--
+-- 			-- NOTE:https://github.com/zigtools/zls/issues/856#issuecomment-1511528925
+-- 			-- fixes the fact of opening quickfix automatically when there are erros
+-- 			vim.g.zig_fmt_parse_errors = 0
+--
+-- 			-- 		end,
+-- 	},
+-- }

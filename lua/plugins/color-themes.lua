@@ -16,8 +16,14 @@ return {
                             ["@keyword.self"] = { fg = colors.mauve },
                             ["@parameter"] = { fg = colors.flamingo },
                             ["@lsp.type.enumMember"] = { fg = "#81c8be" },
+                            BlinkCmpMenuSelection = { bg = colors.surface0 },
+                            -- BlinkCmpDoc = { bg = colors.surface1 },
                         }
                     end,
+                },
+                integrations = {
+                    notify = true,
+                    blink_cmp = true,
                 },
             })
         end,
@@ -150,6 +156,7 @@ return {
     },
     {
         "shaunsingh/nord.nvim",
+        lazy = true,
         config = function()
             vim.g.nord_borders = false
             vim.g.nord_disable_background = true
