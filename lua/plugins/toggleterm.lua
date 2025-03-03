@@ -9,6 +9,10 @@ return {
 
         if vim.loop.os_uname().sysname == "Windows_NT" then
              settings.shell = "powershell"
+        else
+            settings.on_create = function (term)
+                vim.api.nvim_chan_send(term.job_id, "source ~/.zprofile\n")
+            end
         end
 
         require("toggleterm").setup(settings)

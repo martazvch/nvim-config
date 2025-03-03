@@ -113,6 +113,9 @@ vim.keymap.set("n", "<leader>r", function()
 	return "cgn"
 end, { silent = true, expr = true })
 
+-- Visual mode: Replace the selected text and repeat with '.'
+vim.api.nvim_set_keymap("x", "<leader>r", [["sy:let @/=@s<CR>cgn]], { silent = true, noremap = true })
+
 
 -- Begin replacement in all file with selected text
 vim.keymap.set("v", "<leader>!", function()
@@ -124,7 +127,7 @@ vim.keymap.set("v", "<leader>!", function()
 	vim.api.nvim_feedkeys(":%s/" .. selected_text .. "/", "n", false)
 end, { desc = "Search and replace selected text" })
 
--- Begin replacement in all file with selected text
+-- Begin replacement in current to end of file with selected text
 vim.keymap.set("v", "<leader>:", function()
 	-- Yank the selected text (without affecting other yanks) and get it from the unnamed register
 	vim.cmd('normal! "vy')

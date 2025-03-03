@@ -12,7 +12,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "rust_analyzer", "zls" },
+				ensure_installed = { "lua_ls", "rust_analyzer", "zls", "pyright" },
 			})
 		end,
 	},
@@ -25,6 +25,7 @@ return {
 			servers = {
 				lua_ls = {},
 				zls = {},
+                pyright = {},
 				["rust-analyzer"] = {},
 			},
 		},
@@ -58,6 +59,11 @@ return {
 			})
 
 			lspconfig.zls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
+			lspconfig.pyright.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
 			})

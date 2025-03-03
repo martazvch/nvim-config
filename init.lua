@@ -20,10 +20,14 @@ require("lazy").setup("plugins")
 -- Must be initialized after lsp
 require("lsp_lines").setup()
 
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+
 -- Default theme
--- vim.cmd.colorscheme("catppuccin-frappe")
+vim.cmd.colorscheme("catppuccin-frappe")
 -- vim.cmd.colorscheme("nordic")
-vim.cmd.colorscheme("kanagawa")
+-- vim.cmd.colorscheme("kanagawa")
 
 -- Toogles between transparent bg or not
 local toggle_transp_bg = function()
