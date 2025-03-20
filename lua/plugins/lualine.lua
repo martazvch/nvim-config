@@ -31,11 +31,7 @@ return {
             sections = {
                 lualine_a = { "mode" },
                 lualine_b = { "diagnostics" },
-                lualine_c = {},
-                -- lualine_c = { "filename" },
-                lualine_x = {},
-                -- lualine_y = { "filetype" },
-                lualine_y = {
+                lualine_c = {
                     {
                         "filetype",
                         colored = true, -- Displays filetype icon in color if set to true
@@ -44,6 +40,10 @@ return {
                     },
                     { "filename" },
                 },
+                -- lualine_c = { "filename" },
+                lualine_x = {},
+                -- lualine_y = { "filetype" },
+                lualine_y = {},
                 -- lualine_z = { "os.date('%H:%M')" },
                 lualine_z = { "progress" },
             },

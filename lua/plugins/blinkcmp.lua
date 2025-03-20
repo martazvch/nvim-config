@@ -91,7 +91,7 @@ return {
         },
         signature = {
             enabled = true,
-            window = { border = "single" }
+            window = { border = "single" },
         },
     },
 
