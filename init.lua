@@ -53,7 +53,7 @@ local toggle_transp_bg = function()
     vim.cmd("hi Beacon guibg=grey")
 end
 
-vim.keymap.set("n", "<leader>b", toggle_transp_bg, { expr = true })
+-- vim.keymap.set("n", "<leader>b", toggle_transp_bg, { expr = true })
 vim.api.nvim_create_user_command('ToggleTranspBg', toggle_transp_bg, {})
 
 vim.cmd("hi Beacon guibg=grey")

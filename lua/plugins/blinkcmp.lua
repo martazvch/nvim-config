@@ -25,6 +25,7 @@ return {
             ["<Up>"] = { "select_prev", "fallback" },
             ["<Down>"] = { "select_next", "fallback" },
             ["<Tab>"] = { "accept", "fallback" },
+            ["<S-Tab>"] = { "snippet_forward", "fallback" },
         },
 
         appearance = {

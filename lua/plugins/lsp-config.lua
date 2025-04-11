@@ -38,6 +38,16 @@ return {
 
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                vim.keymap.set("n", "gD", function()
+                    vim.cmd("vsplit")
+                    vim.cmd("wincmd L")
+                    vim.lsp.buf.definition()
+
+                    -- Small delay to ensure LSP loads before centering because goto is async
+                    vim.defer_fn(function()
+                        vim.cmd("normal! zz") -- Center the screen properly
+                    end, 100)
+                end, opts)
                 vim.keymap.set({ "n", "v" }, "za", vim.lsp.buf.code_action, opts)
                 -- Show a tab with all symbols of workspace and we can jump to them
                 vim.keymap.set({ "n", "v" }, "zs", vim.lsp.buf.workspace_symbol, opts)
@@ -76,6 +86,7 @@ return {
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = { "*.zig", "*.zon" },
                 callback = function(ev)
+                    vim.lsp.buf.format()
                     vim.lsp.buf.code_action({
                         context = { only = { "source.fixAll" } },
                         apply = true,

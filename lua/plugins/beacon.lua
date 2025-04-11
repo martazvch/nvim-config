@@ -1,6 +1,7 @@
 return {
     -- Show cursor when jumping arround to keep track visually
 	"danilamihailov/beacon.nvim",
+    event = 'VeryLazy',
     config = function ()
         require("beacon").setup({
             speed = 3,
