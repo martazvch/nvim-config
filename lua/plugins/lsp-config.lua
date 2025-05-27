@@ -12,7 +12,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "rust_analyzer", "zls", "pyright" },
+                ensure_installed = { "lua_ls", "rust_analyzer", "zls", "pyright", "wgsl_analyzer" },
             })
         end,
     },
@@ -26,6 +26,38 @@ return {
                 lua_ls = {},
                 zls = {},
                 pyright = {},
+                wgsl_analyzer = {
+                    settings = {
+                        ["wgsl-analyzer"] = {},
+                    },
+                    handlers = {
+                        ["wgsl-analyzer/requestConfiguration"] = function()
+                            return {
+                                success = true,
+                                customImports = { _dummy_ = "dummy" },
+                                shaderDefs = {},
+                                trace = {
+                                    extension = false,
+                                    server = false,
+                                },
+                                inlayHints = {
+                                    enabled = false,
+                                    typeHints = false,
+                                    parameterHints = false,
+                                    structLayoutHints = false,
+                                    typeVerbosity = "inner",
+                                },
+                                diagnostics = {
+                                    typeErrors = true,
+                                    nagaParsingErrors = true,
+                                    nagaValidationErrors = true,
+                                    nagaVersion = "main",
+                                },
+                            }
+                        end,
+                    },
+                },
+
                 ["rust-analyzer"] = {},
             },
         },
@@ -74,6 +106,7 @@ return {
             lspconfig.zls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
+                -- cmd = { "/Users/mvachero/zigm/zls-macos-aarch64-0.14.0-dev.406+336f468/zls" },
                 settings = {
                     zls = { enable_build_on_save = true },
                 },
@@ -94,16 +127,22 @@ return {
                 end,
             })
 
-            -- Code action for sorting imports
-            -- vim.api.nvim_create_autocmd("BufWritePre", {
-            --     pattern = { "*.zig", "*.zon" },
-            --     callback = function(ev)
-            --         vim.lsp.buf.code_action({
-            --             context = { only = { "source.organizeImports" } },
-            --             apply = true,
-            --         })
-            --     end,
-            -- })
+            -----------------
+            -- WGSL config --
+            -----------------
+            lspconfig.wgsl_analyzer.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                filetypes = { "wgsl" },
+                cmd = { "/Users/mvachero/.local/share/nvim/mason/bin/wgsl_analyzer" },
+            })
+
+            vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+                pattern = "*.wgsl",
+                callback = function()
+                    vim.bo.filetype = "wgsl"
+                end,
+            })
 
             -------------------
             -- Python config --

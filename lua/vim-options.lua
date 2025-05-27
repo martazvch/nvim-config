@@ -49,16 +49,6 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
--- Blocks
-vim.keymap.set("n", "vù", "vib") -- Select all inside (
-vim.keymap.set("n", "v%", "vab") -- Select all inside + (
-vim.keymap.set("n", "v*", "viB") -- Select all inside {
-vim.keymap.set("n", "vµ", "vaB") -- Select all inside + {
-vim.keymap.set("n", "yù", "yib")
-vim.keymap.set("n", "y%", "yab")
-vim.keymap.set("n", "y*", "yiB")
-vim.keymap.set("n", "yµ", "yaB")
-
 -- Paragraph utils from current line
 -- Copy paste paragraphe under
 vim.keymap.set("n", "cp", "yap}p")
@@ -67,13 +57,11 @@ vim.keymap.set("n", "dp", "^d}")
 -- Copy paragraphe
 vim.keymap.set("n", "yp", "^y}")
 
--- When writting in snippets
---  exit insert mode, jump to next section and erase until ,
-vim.keymap.set("i", "<M-;>", "<Esc>wwct,")
---  exit insert mode, jump to next section and erase until )
-vim.keymap.set("i", "<M-:>", "<Esc>wwct)")
--- Exit insert mode to go end of line and go back in insert mode
-vim.keymap.set("i", "<M-!>", "<Esc>A")
+-- Copies the lines, comment it and paste it under
+-- It's a command as "yygccp" would be treated as a string
+vim.keymap.set("n", "<leader>p", function()
+	vim.cmd.normal("yygccp")
+end, { noremap = true, silent = true })
 
 -- Registers
 -- Paste without replacing the copy buffer
@@ -95,17 +83,16 @@ vim.keymap.set("n", "tn", ":tabn<CR>")
 
 -- Navigation
 if vim.loop.os_uname().sysname == "Windows_NT" then
-    vim.keymap.set("n", "<C-Left>", "<C-w>h")
-    vim.keymap.set("n", "<C-Right>", "<C-w>l")
+	vim.keymap.set("n", "<C-Left>", "<C-w>h")
+	vim.keymap.set("n", "<C-Right>", "<C-w>l")
 else
-    vim.keymap.set("n", "<M-h>", "<C-w>h")
-    vim.keymap.set("n", "<M-l>", "<C-w>l")
+	vim.keymap.set("n", "<M-h>", "<C-w>h")
+	vim.keymap.set("n", "<M-l>", "<C-w>l")
 end
 
 -- Begin replacement with word under cursor until EOF or whole file
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
 vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
-
 
 -- Mimic the behavior of "Crtl-d" in VSCode in normal and visual mode
 vim.keymap.set("n", "<leader>r", function()
@@ -115,7 +102,6 @@ end, { silent = true, expr = true })
 
 -- Visual mode: Replace the selected text and repeat with '.'
 vim.api.nvim_set_keymap("x", "<leader>r", [["sy:let @/=@s<CR>cgn]], { silent = true, noremap = true })
-
 
 -- Begin replacement in all file with selected text
 vim.keymap.set("v", "<leader>!", function()

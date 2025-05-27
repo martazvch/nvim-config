@@ -30,18 +30,12 @@ return {
         end,
     },
     {
-        "folke/tokyonight.nvim",
+        "romanaverin/charleston.nvim",
+        name = "charleston",
         priority = 1000,
-        lazy = true,
-        config = function()
-            require("tokyonight").setup({
-                styles = {
-                    -- Default set it to italic, it disables it
-                    comments = { italic = false },
-                    keywords = { italic = false },
-                },
-            })
-        end,
+        opts = {
+            italic = false,
+        },
     },
     {
         "rebelot/kanagawa.nvim",
@@ -107,18 +101,6 @@ return {
                 ui_contrast = "high",
             })
         end,
-    },
-    {
-        "EdenEast/nightfox.nvim",
-        lazy = true,
-    },
-    {
-        "sam4llis/nvim-tundra",
-        lazy = true,
-    },
-    {
-        "rose-pine/neovim",
-        lazy = true,
     },
     {
         "AlexvZyl/nordic.nvim",

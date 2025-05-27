@@ -91,8 +91,12 @@ return {
             },
         },
         signature = {
-            enabled = true,
-            window = { border = "single" },
+            -- enabled = true,
+            enabled = false,
+            window = {
+                border = "single",
+                direction_priority = { "s", "n" },
+            },
         },
     },
 
