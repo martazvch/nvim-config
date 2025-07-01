@@ -63,6 +63,10 @@ return {
             vim.keymap.set("n", "ts", builtin.lsp_document_symbols, {})
             vim.keymap.set("n", "tr", builtin.lsp_references, {})
             vim.keymap.set("n", "tf", builtin.current_buffer_fuzzy_find, {})
+            vim.keymap.set("n", "td", builtin.diagnostics, {})
+            vim.keymap.set("n", "tfd", function()
+                require("telescope.builtin").diagnostics({ bufnr = 0 })
+            end, { desc = "Telescope diagnostics for current buffer" })
 
             -- Keymap to search only in Zig files
             vim.keymap.set("n", "tz", function()

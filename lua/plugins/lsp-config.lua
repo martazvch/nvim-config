@@ -1,6 +1,23 @@
 -- https://www.reddit.com/r/neovim/comments/1cx05ws/spawning_lsp_servers_fails_regularly/
 local bin_path = "C:/Users/33634/AppData/Local/nvim-data/mason/bin/"
 
+local border = {
+    { "╭", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╮", "FloatBorder" },
+    { "│", "FloatBorder" },
+    { "╯", "FloatBorder" },
+    { "─", "FloatBorder" },
+    { "╰", "FloatBorder" },
+    { "│", "FloatBorder" },
+}
+
+-- LSP settings (for overriding per client)
+local handlers = {
+    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+    ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+}
+
 return {
     {
         "williamboman/mason.nvim",
@@ -19,45 +36,13 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },
-
-        -- example using `opts` for defining servers
         opts = {
             servers = {
                 lua_ls = {},
-                zls = {},
-                pyright = {},
-                wgsl_analyzer = {
-                    settings = {
-                        ["wgsl-analyzer"] = {},
-                    },
-                    handlers = {
-                        ["wgsl-analyzer/requestConfiguration"] = function()
-                            return {
-                                success = true,
-                                customImports = { _dummy_ = "dummy" },
-                                shaderDefs = {},
-                                trace = {
-                                    extension = false,
-                                    server = false,
-                                },
-                                inlayHints = {
-                                    enabled = false,
-                                    typeHints = false,
-                                    parameterHints = false,
-                                    structLayoutHints = false,
-                                    typeVerbosity = "inner",
-                                },
-                                diagnostics = {
-                                    typeErrors = true,
-                                    nagaParsingErrors = true,
-                                    nagaValidationErrors = true,
-                                    nagaVersion = "main",
-                                },
-                            }
-                        end,
-                    },
+                zls = {
+                    handlers = handlers,
                 },
-
+                pyright = {},
                 ["rust-analyzer"] = {},
             },
         },
@@ -106,7 +91,7 @@ return {
             lspconfig.zls.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
-                -- cmd = { "/Users/mvachero/zigm/zls-macos-aarch64-0.14.0-dev.406+336f468/zls" },
+                -- handlers = handlers,
                 settings = {
                     zls = { enable_build_on_save = true },
                 },
@@ -126,24 +111,7 @@ return {
                     })
                 end,
             })
-
-            -----------------
-            -- WGSL config --
-            -----------------
-            lspconfig.wgsl_analyzer.setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                filetypes = { "wgsl" },
-                cmd = { "/Users/mvachero/.local/share/nvim/mason/bin/wgsl_analyzer" },
-            })
-
-            vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-                pattern = "*.wgsl",
-                callback = function()
-                    vim.bo.filetype = "wgsl"
-                end,
-            })
-
+            ---
             -------------------
             -- Python config --
             -------------------
@@ -188,47 +156,3 @@ return {
         end,
     },
 }
--- 	{
--- 		"neovim/nvim-lspconfig",
--- 		config = function()
--- 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
---
--- 			local lspconfig = require("lspconfig")
---
--- 			local on_attach = function(client, bufnr)
--- 				local opts = { buffer = bufnr }
---
--- 				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
--- 				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
--- 				vim.keymap.set({ "n", "v" }, "za", vim.lsp.buf.code_action, opts)
--- 				-- Show a tab with all symbols of workspace and we can jump to them
--- 				vim.keymap.set({ "n", "v" }, "zs", vim.lsp.buf.workspace_symbol, opts)
--- 				-- Open a file dialog with diagnostic of element under cursor
--- 				vim.keymap.set({ "n", "v" }, "zi", vim.diagnostic.open_float, opts)
--- 				-- Go to next element in file that has a diagnostic
--- 				vim.keymap.set({ "n", "v" }, "zn", vim.diagnostic.goto_next, opts)
--- 				-- Go to previous element in file that has a diagnostic
--- 				vim.keymap.set({ "n", "v" }, "zp", vim.diagnostic.goto_prev, opts)
--- 			end
---
--- 			local path = vim.loop.os_uname().sysname == "Windows_NT" and bin_path .. "lua-language-server.cmd"
--- 				or "lua-language-server"
---
--- 			lspconfig.lua_ls.setup({
--- 				capabilities = capabilities,
--- 				on_attach = on_attach,
--- 				cmd = { path },
--- 			})
---
--- 			lspconfig.zls.setup({
--- 				capabilities = capabilities,
--- 				on_attach = on_attach,
--- 			})
---
--- 			-- NOTE:https://github.com/zigtools/zls/issues/856#issuecomment-1511528925
--- 			-- fixes the fact of opening quickfix automatically when there are erros
--- 			vim.g.zig_fmt_parse_errors = 0
---
--- 			-- 		end,
--- 	},
--- }

@@ -7,7 +7,7 @@ local function focus_or_open(filename)
 			return
 		end
 	end
-	vim.cmd("edit " .. vim.fn.fnameescape(filename))
+	vim.cmd("tabnew " .. vim.fn.fnameescape(filename))
 end
 
 return {
@@ -19,8 +19,8 @@ return {
 	},
 	opts = {
 		show_icons = true,
-		leader_key = ";", -- Recommended to be a single key
-		buffer_leader_key = "ù", -- Per Buffer Mappings
+		leader_key = "ù", -- Recommended to be a single key
+		buffer_leader_key = "=", -- Per Buffer Mappings
 		custom_actions = {
 			open = function(target_file_name, current_file_name)
 				focus_or_open(target_file_name)
