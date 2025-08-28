@@ -94,15 +94,6 @@ end
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
 vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
 
--- Mimic the behavior of "Crtl-d" in VSCode in normal and visual mode
-vim.keymap.set("n", "<leader>r", function()
-	vim.fn.setreg("/", "\\<" .. vim.fn.expand("<cword>") .. "\\>")
-	return "cgn"
-end, { silent = true, expr = true })
-
--- Visual mode: Replace the selected text and repeat with '.'
-vim.api.nvim_set_keymap("x", "<leader>r", [["sy:let @/=@s<CR>cgn]], { silent = true, noremap = true })
-
 -- Begin replacement in all file with selected text
 vim.keymap.set("v", "<leader>!", function()
 	-- Yank the selected text (without affecting other yanks) and get it from the unnamed register

@@ -8,8 +8,6 @@ return {
         local set = vim.keymap.set
 
         -- Add or skip cursor above/below the main cursor.
-        set({"n", "x"}, "<M-up>", function() mc.lineAddCursor(-1) end)
-        set({"n", "x"}, "<M-down>", function() mc.lineAddCursor(1) end)
         set({"n", "x"}, "<M-k>", function() mc.lineAddCursor(-1) end)
         set({"n", "x"}, "<M-j>", function() mc.lineAddCursor(1) end)
         set({"n", "x"}, "<leader><up>", function() mc.lineSkipCursor(-1) end)
@@ -42,7 +40,7 @@ return {
         set("n", "<leader>/A", mc.searchAllAddCursors)
 
         -- Disable and enable cursors.
-        set({"n", "x"}, "<c-q>", mc.toggleCursor)
+        -- set({"n", "x"}, "<c-q>", mc.toggleCursor)
 
         -- Mappings defined in a keymap layer only apply when there are
         -- multiple cursors. This lets you have overlapping mappings.

@@ -9,6 +9,7 @@ end
 
 return {
 	"maan2003/lsp_lines.nvim",
+    lazy = true,
 	config = function()
 		vim.diagnostic.config({ virtual_text = true })
 		vim.keymap.set("n", "<leader>l", toggle_lsp_lines)
