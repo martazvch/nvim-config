@@ -25,45 +25,24 @@ require("lazy").setup("plugins")
 --require("telescope").load_extension("fzf")
 
 -- Default theme
-vim.cmd.colorscheme("catppuccin-frappe")
--- vim.cmd.colorscheme("nordic")
--- vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("kanagawa-wave")
 
--- Toogles between transparent bg or not
-local toggle_transp_bg = function()
-    local opts = require("catppuccin").options
-    local bg = not opts.transparent_background
-    opts.transparent_background = bg
+-- Blink theme
+local k = require("kanagawa.colors").setup({ theme = "wave" })
+local p = k.palette
 
-    require("catppuccin").setup(opts)
-    vim.cmd.colorscheme("catppuccin-frappe")
+-- Main menu
+vim.api.nvim_set_hl(0, "BlinkCmpMenu", { fg = p.fujiWhite, bg = p.sumiInk4 })
+vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = p.sumiInk2, bg = p.sumiInk4 })
 
-    if bg then
-        vim.cmd("hi Normal guibg=NONE ctermbg=NONE")           -- focused buffer
-        vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")         -- unfocused buffer
-        vim.cmd("hi TelescopeSelection guibg=#414559 guifg=#c6d0f5") -- normal mode with catppuccin
+-- Selected item (darker, clearer)
+vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { fg = p.fujiWhite, bg = p.waveBlue2, bold = true })
 
-        -- NeoTree
-        -- vim.cmd("hi NeoTreeNormal guibg=NONE")
-        -- vim.cmd("hi NeoTreeNormalNC guibg=NONE")
-        -- vim.cmd("hi NeoTreeWinSeparator guibg=NONE")
-    end
-
-    -- Hack to make it always same color
-    vim.cmd("hi Beacon guibg=grey")
-end
-
--- vim.keymap.set("n", "<leader>b", toggle_transp_bg, { expr = true })
-vim.api.nvim_create_user_command("ToggleTranspBg", toggle_transp_bg, {})
+-- Completion kinds
+vim.api.nvim_set_hl(0, "BlinkCmpKind", { fg = p.springGreen })
+vim.api.nvim_set_hl(0, "BlinkCmpKindText", { fg = p.springGreen })
 
 vim.cmd("hi Beacon guibg=grey")
--- Transparent on startup
--- toggle_transp_bg()
-
---- Arrow ---
--- Next / previous marked files
-vim.keymap.set("n", "<A-p>", require("arrow.persist").previous)
-vim.keymap.set("n", "<A-n>", require("arrow.persist").next)
 
 vim.filetype.add({
     extension = {

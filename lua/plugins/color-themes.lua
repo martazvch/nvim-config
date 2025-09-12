@@ -1,19 +1,11 @@
 return {
     {
-        "vague2k/vague.nvim",
-        config = function()
-            require("vague").setup({
-                italic = false,
-            })
-        end,
-    },
-    {
         "catppuccin/nvim",
         name = "catppuccin",
         priority = 1000,
         config = function()
             require("catppuccin").setup({
-                transparent_background = false, -- disables setting the background color.
+                transparent_background = false,
                 no_italic = true,
                 styles = {
                     comments = { "italic" },
@@ -38,14 +30,6 @@ return {
         end,
     },
     {
-        "romanaverin/charleston.nvim",
-        name = "charleston",
-        priority = 1000,
-        opts = {
-            italic = false,
-        },
-    },
-    {
         "rebelot/kanagawa.nvim",
         priority = 1000,
         lazy = false,
@@ -53,7 +37,7 @@ return {
             require("kanagawa").setup({
                 commentStyle = { italic = false },
                 keywordStyle = { italic = false, bold = false },
-                transparent = true,
+                transparent = false,
                 colors = {
                     theme = {
                         all = {
@@ -66,13 +50,19 @@ return {
                 -- Floating windows nicer
                 overrides = function(colors)
                     local theme = colors.theme
+                    local k = require("kanagawa.colors").setup({ theme = "wave" })
+                    local p = k.palette
+
                     return {
                         Boolean = { bold = false },
-                        NormalFloat = { bg = "none" },
-                        FloatBorder = { bg = "none" },
-                        FloatTitle = { bg = "none" },
-                        ["@keyword.exception"] = { bold = false },
+                        -- NormalFloat = { bg = p.sumiInk3 },
+                        -- FloatBorder = { bg = "none" },
+                        -- FloatBorder = { fg = p.sumiInk2, bg = p.sumiInk3 },
+                        -- FloatTitle = { bg = "none" },
+                        ["@keyword.exception"] = { link = "@lsp.type.keyword", bold = false },
                         ["@string.escape"] = { bold = false },
+                        ["@lsp.type.enumMember.zig"] = { link = "@lsp.type.property.zig" },
+                        ["@keyword.return.zig"] = { link = "@lsp.type.keyword" },
 
                         -- Save an hlgroup with dark background and dimmed foreground
                         -- so that you can use it where your still want darker windows.
@@ -96,64 +86,6 @@ return {
                     }
                 end,
             })
-        end,
-    },
-    {
-        "neanias/everforest-nvim",
-        lazy = true,
-        priority = 1000,
-        config = function()
-            require("everforest").setup({
-                background = "hard",
-                show_eob = false, -- Deletes ~ until Eof
-                ui_contrast = "high",
-            })
-        end,
-    },
-    {
-        "AlexvZyl/nordic.nvim",
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require("nordic").setup({
-                on_highlight = function(highlights, palette)
-                    -- Highlight parameters
-                    highlights["@parameter"] = { italic = false }
-
-                    -- Highlight the '&' operator
-                    highlights["@operator"] = { fg = "#99d1db" } -- Applies to all operators, including '&'
-                    highlights["@punctuation.delimiter"] = { fg = "#949cbb" }
-                    highlights["@punctuation.bracket"] = { fg = "#949cbb" }
-                    highlights["@function.builtin"] = { fg = palette.orange.base }
-
-                    highlights["@lsp.type.enumMember"] = { fg = "#81c8be" }
-                end,
-                italic_comments = false,
-                bright_border = true,
-                transparent = {
-                    -- Enable transparent background.
-                    bg = true,
-                    -- Enable transparent background for floating windows.
-                    float = true,
-                },
-                telescope = {
-                    -- Available styles: `classic`, `flat`.
-                    style = "classic",
-                },
-            })
-
-            vim.cmd("hi Beacon guibg=grey")
-        end,
-    },
-    {
-        "shaunsingh/nord.nvim",
-        lazy = true,
-        config = function()
-            vim.g.nord_borders = false
-            vim.g.nord_disable_background = true
-            vim.g.nord_italic = false
-            vim.g.nord_bold = false
-            vim.g.nord_cursorline_transparent = false
         end,
     },
 }

@@ -10,6 +10,7 @@ return {
         --     end
         -- end
 
+        -------- CATPUCCIN -----------
         local catppuccin = require("lualine.themes.catppuccin")
         -- Colors of 'Normal' highlight group for catppuccin frappe
         catppuccin.normal.c.fg = "#c6d0f5"
@@ -19,14 +20,47 @@ return {
         catppuccin.inactive.b.bg = "#303446"
         catppuccin.inactive.c.bg = "#303446"
 
+        -------- KANAGAWA ---------
+        local kcolors = require("kanagawa.colors").setup({ theme = "wave" })
+        local palette = kcolors.palette
+        local theme = kcolors.theme
+
         require("lualine").setup({
             options = {
                 -- theme = "auto",
-                theme = catppuccin,
+                -- theme = catppuccin,
+                theme = {
+                    normal = {
+                        a = { fg = palette.fujiWhite, bg = palette.sumiInk4, gui = "bold" },
+                        b = { fg = palette.fujiWhite, bg = palette.sumiInk4 },
+                        c = { fg = palette.fujiWhite, bg = palette.sumiInk4 },
+                    },
+                    insert = {
+                        a = { fg = palette.fujiWhite, bg = palette.springGreen, gui = "bold" },
+                    },
+                    visual = {
+                        a = { fg = palette.fujiWhite, bg = palette.waveAqua2, gui = "bold" },
+                    },
+                    replace = {
+                        a = { fg = palette.fujiWhite, bg = palette.peachRed, gui = "bold" },
+                    },
+                    command = {
+                        a = { fg = palette.fujiWhite, bg = palette.roninYellow, gui = "bold" },
+                    },
+                    diagnostics = {
+                        a = { fg = palette.fujiWhite, bg = palette.samuraiRed, gui = "bold" },
+                    },
+                    inactive = {
+                        a = { fg = palette.fujiGray, bg = palette.sumiInk4 },
+                        b = { fg = palette.fujiGray, bg = palette.sumiInk4 },
+                        c = { fg = palette.fujiGray, bg = palette.sumiInk4 },
+                    },
+                },
                 -- component_separators = { left = "", right = "" },
                 component_separators = "",
+                section_separators = "",
                 -- section_separators = { left = "", right = "" },
-                section_separators = { left = "", right = "" },
+                -- section_separators = { left = "", right = "" },
             },
             sections = {
                 lualine_a = { "mode" },

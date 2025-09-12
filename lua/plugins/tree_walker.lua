@@ -14,10 +14,10 @@ return {
             vim.keymap.set("n", "♢", "<cmd>Treewalker SwapLeft<cr>", { noremap = true }) -- ctrl + shift + h
             vim.keymap.set("n", "♣", "<cmd>Treewalker SwapRight<cr>", { noremap = true }) -- ctrl + shift + l
         else
-            vim.keymap.set("n", "<C-K>", "<cmd>Treewalker SwapUp<cr>", { silent = true })
-            vim.keymap.set("n", "<C-J>", "<cmd>Treewalker SwapDown<cr>", { silent = true })
-            vim.keymap.set("n", "<C-H>", "<cmd>Treewalker SwapLeft<cr>", { silent = true })
-            vim.keymap.set("n", "<C-L>", "<cmd>Treewalker SwapRight<cr>", { silent = true })
+            vim.keymap.set("n", "<C-S-K>", "<cmd>Treewalker SwapUp<cr>", { silent = true })
+            vim.keymap.set("n", "<C-S-J>", "<cmd>Treewalker SwapDown<cr>", { silent = true })
+            vim.keymap.set("n", "<C-S-H>", "<cmd>Treewalker SwapLeft<cr>", { silent = true })
+            vim.keymap.set("n", "<C-S-L>", "<cmd>Treewalker SwapRight<cr>", { silent = true })
         end
     end,
 }
