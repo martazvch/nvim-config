@@ -1,6 +1,3 @@
--- https://www.reddit.com/r/neovim/comments/1cx05ws/spawning_lsp_servers_fails_regularly/
-local bin_path = "C:/Users/33634/AppData/Local/nvim-data/mason/bin/"
-
 return {
     {
         "williamboman/mason.nvim",
@@ -9,80 +6,51 @@ return {
         end,
     },
     {
-        "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "rust_analyzer", "zls", "pyright", "wgsl_analyzer" },
-            })
-        end,
-    },
-    {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },
-        opts = {
-            servers = {
-                lua_ls = {},
-                zls = {},
-                pyright = {},
-            },
-        },
-        config = function(_, opts)
-            local lspconfig = require("lspconfig")
+        config = function()
             local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-            local on_attach = function(client, bufnr)
+            local function on_attach(client, bufnr)
                 local opts = { buffer = bufnr }
-
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                vim.keymap.set("n", "gD", function()
-                    vim.cmd("vsplit")
-                    vim.cmd("wincmd L")
-                    vim.lsp.buf.definition()
-
-                    -- Small delay to ensure LSP loads before centering because goto is async
-                    vim.defer_fn(function()
-                        vim.cmd("normal! zz") -- Center the screen properly
-                    end, 100)
-                end, opts)
-                vim.keymap.set({ "n", "v" }, "za", vim.lsp.buf.code_action, opts)
-                -- Show a tab with all symbols of workspace and we can jump to them
-                vim.keymap.set({ "n", "v" }, "zs", vim.lsp.buf.workspace_symbol, opts)
-                -- Open a file dialog with diagnostic of element under cursor
-                vim.keymap.set({ "n", "v" }, "zi", vim.diagnostic.open_float, opts)
-                -- Go to next element in file that has a diagnostic
-                vim.keymap.set({ "n", "v" }, "zn", vim.diagnostic.goto_next, opts)
-                -- Go to previous element in file that has a diagnostic
-                vim.keymap.set({ "n", "v" }, "zp", vim.diagnostic.goto_prev, opts)
-                -- Rename LSP symbol
-                vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-
+                vim.keymap.set("n", "za", vim.lsp.buf.code_action, opts)
+                vim.keymap.set("n", "zs", vim.lsp.buf.workspace_symbol, opts)
+                vim.keymap.set("n", "zi", vim.diagnostic.open_float, opts)
+                vim.keymap.set("n", "zn", vim.diagnostic.goto_next, opts)
+                vim.keymap.set("n", "zp", vim.diagnostic.goto_prev, opts)
+                vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+
+                if client.server_capabilities.documentFormattingProvider then
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        callback = function()
+                            vim.lsp.buf.format({ async = false })
+                        end,
+                    })
+                end
             end
 
-            local path = vim.loop.os_uname().sysname == "Windows_NT" and bin_path .. "lua-language-server.cmd"
-                or "lua-language-server"
+            -- Mason installs binaries in this path
+            local bin_path = vim.fn.stdpath("data") .. "/mason/bin/"
 
-            lspconfig.lua_ls.setup({
+            -- Lua LS
+            vim.lsp.config("lua_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
-                cmd = { path },
+                cmd = { bin_path .. "lua-language-server" .. (vim.loop.os_uname().sysname == "Windows_NT" and ".cmd" or "") },
             })
+            vim.lsp.enable("lua_ls")
 
-            ----------------
-            -- Zig config --
-            ----------------
-            lspconfig.zls.setup({
+            -- Zig LS
+            vim.lsp.config("zls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
-                -- handlers = handlers,
-                settings = {
-                    zls = { enable_build_on_save = true },
-                },
+                settings = { zls = { enable_build_on_save = true } },
+                cmd = { "zls" },
             })
-
-            -- Don't parse error in separate window
-            vim.g.zig_fmt_parse_errors = 0
+            vim.lsp.enable("zls")
 
             -- Code action for auto adding/removing discard
             vim.api.nvim_create_autocmd("BufWritePre", {
@@ -95,48 +63,32 @@ return {
                     })
                 end,
             })
-            ---
-            -------------------
-            -- Python config --
-            -------------------
-            lspconfig.pyright.setup({
+
+            -- Python
+            vim.lsp.config("pyright", {
                 capabilities = capabilities,
                 on_attach = on_attach,
+                cmd = { bin_path .. "pyright-langserver", "--stdio" },
             })
+            vim.lsp.enable("pyright")
 
-            -- Rust config via rustacean
-
-            lspconfig.rust_analyzer.setup({
+            -- Rust
+            vim.lsp.config("rust_analyzer", {
                 capabilities = capabilities,
                 on_attach = function(client, bufnr)
+                    on_attach(client, bufnr)
                     local opts = { buffer = bufnr }
-
-                    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                    vim.keymap.set({ "n", "v" }, "za", vim.lsp.buf.code_action, opts)
-                    -- Show a tab with all symbols of workspace and we can jump to them
-                    vim.keymap.set({ "n", "v" }, "zs", vim.lsp.buf.workspace_symbol, opts)
-                    -- Open a file dialog with diagnostic of element under cursor
-                    vim.keymap.set({ "n", "v" }, "zi", vim.diagnostic.open_float, opts)
-                    -- Go to next element in file that has a diagnostic
-                    vim.keymap.set({ "n", "v" }, "zn", vim.diagnostic.goto_next, opts)
-                    -- Go to previous element in file that has a diagnostic
-                    vim.keymap.set({ "n", "v" }, "zp", vim.diagnostic.goto_prev, opts)
-                    -- Launch tests
-                    vim.keymap.set("n", "rt", ":RustLsp testables<CR>")
-                    -- Explain error
-                    vim.keymap.set("n", "re", ":RustLsp explainError<CR>")
-                    -- Render diagnostic (cycles like goto_next diag)
-                    vim.keymap.set("n", "rd", ":RustLsp renderDiagnostic<CR>")
-                    -- Open Cargo.toml
-                    vim.keymap.set("n", "rc", ":RustLsp openCargo<CR>")
-                    -- Join lines
-                    vim.keymap.set({ "n", "v" }, "rj", ":RustLsp joinLines<CR>")
-                    -- Move item up/down
-                    vim.keymap.set({ "n", "v" }, "<A-up>", ":RustLsp moveItem up<CR>")
-                    vim.keymap.set({ "n", "v" }, "<A-down>", ":RustLsp moveItem down<CR>")
+                    vim.keymap.set("n", "rt", ":RustLsp testables<CR>", opts)
+                    vim.keymap.set("n", "re", ":RustLsp explainError<CR>", opts)
+                    vim.keymap.set("n", "rd", ":RustLsp renderDiagnostic<CR>", opts)
+                    vim.keymap.set("n", "rc", ":RustLsp openCargo<CR>", opts)
+                    vim.keymap.set({ "n", "v" }, "rj", ":RustLsp joinLines<CR>", opts)
+                    vim.keymap.set({ "n", "v" }, "<A-up>", ":RustLsp moveItem up<CR>", opts)
+                    vim.keymap.set({ "n", "v" }, "<A-down>", ":RustLsp moveItem down<CR>", opts)
                 end,
+                cmd = { bin_path .. "rust-analyzer" },
             })
+            vim.lsp.enable("rust_analyzer")
         end,
     },
 }

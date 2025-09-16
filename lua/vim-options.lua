@@ -88,6 +88,10 @@ else
     vim.keymap.set("n", "<M-l>", "<C-w>l")
 end
 
+-- Insert new lines
+vim.keymap.set({ "n", "v" }, "<M-o>", "m`o<Esc>0D``")
+vim.keymap.set({ "n", "v" }, "<M-O>", "m`O<Esc>0D``")
+
 -- Begin replacement with word under cursor until EOF or whole file
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
 vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")

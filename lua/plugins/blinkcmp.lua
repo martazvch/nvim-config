@@ -90,6 +90,16 @@ return {
                 auto_show_delay_ms = 0,
             },
         },
+        cmdline = {
+            completion = { menu = { auto_show = true } },
+            keymap = {
+                ["<Left>"] = false,
+                ["<Right>"] = false,
+                ["<Tab>"] = { "show", "accept" },
+                ["<Up>"] = { "select_prev", "fallback" },
+                ["<Down>"] = { "select_next", "fallback" },
+            }
+        },
         signature = {
             -- enabled = true,
             enabled = false,
