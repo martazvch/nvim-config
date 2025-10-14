@@ -23,6 +23,15 @@ return {
                 layout_config = { width = 0.8, height = 0.6 },
             })
 
+            -- With preview
+            local dropdown_preview = themes.get_dropdown({
+                layout_config = {
+                    width = 0.8,
+                    height = 0.6,
+                    preview_cutoff = 10,
+                },
+            })
+
             telescope.setup({
                 defaults = {
                     layout_strategy = "center",
@@ -60,7 +69,11 @@ return {
                 },
                 pickers = {
                     find_files = dropdown,
-                    live_grep = dropdown,
+                    live_grep = dropdown_preview,
+                    lsp_document_symbols = dropdown_preview,
+                    diagnostics = dropdown_preview,
+                    lsp_references = dropdown_preview,
+                    current_buffer_fuzzy_find = dropdown_preview,
                 },
                 extensions = {
                     fzf = {
