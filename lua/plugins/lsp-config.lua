@@ -15,6 +15,11 @@ return {
                 local opts = { buffer = bufnr }
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                -- Opens definition in a vertical split on the right
+                vim.keymap.set("n", "gD", function()
+                    vim.cmd("vsplit | wincmd l")
+                    vim.lsp.buf.definition()
+                end, opts)
                 vim.keymap.set("n", "za", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "zs", vim.lsp.buf.workspace_symbol, opts)
                 vim.keymap.set("n", "zi", vim.diagnostic.open_float, opts)

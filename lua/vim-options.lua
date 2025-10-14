@@ -19,6 +19,27 @@ vim.opt.fillchars = "eob: "
 vim.opt.clipboard = "unnamedplus"
 vim.keymap.set("i", "<C-v>", "<C-R>*")
 
+-- Use rg when using :grep!
+vim.o.grepprg = "rg --vimgrep --no-heading --smart-case"
+
+vim.api.nvim_create_user_command('RGReplace', function(opts)
+    local pattern = opts.fargs[1]
+    local replacement = opts.fargs[2]
+    local path = opts.fargs[3] or '**/*.*'
+    -- search with grep
+    vim.cmd('grep! ' .. pattern .. ' ' .. path)
+    vim.cmd('copen')
+    -- replace across quickfix files
+    vim.cmd('cfdo %s/' .. pattern .. '/' .. replacement .. '/gc | update')
+end, { nargs = '+' })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    callback = function()
+        vim.opt_local.formatoptions:remove({ "c", "o", "r" })
+    end,
+})
+
 -- Keymaps
 
 -- Quick save
@@ -84,8 +105,8 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
     vim.keymap.set("n", "<C-Left>", "<C-w>h")
     vim.keymap.set("n", "<C-Right>", "<C-w>l")
 else
-    vim.keymap.set("n", "<M-h>", "<C-w>h")
-    vim.keymap.set("n", "<M-l>", "<C-w>l")
+    vim.keymap.set("n", "<M-&>", "<C-w>h")
+    vim.keymap.set("n", "<M-é>", "<C-w>l")
 end
 
 -- Insert new lines
@@ -94,10 +115,10 @@ vim.keymap.set({ "n", "v" }, "<M-O>", "m`O<Esc>0D``")
 
 -- Begin replacement with word under cursor until EOF or whole file
 vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
-vim.keymap.set("n", "<leader>*", ":%s/<C-r><C-w>/")
+vim.keymap.set("n", "<leader>$", ":%s/<C-r><C-w>/")
 
 -- Begin replacement in all file with selected text
-vim.keymap.set("v", "<leader>!", function()
+vim.keymap.set("v", "<leader>ù", function()
     -- Yank the selected text (without affecting other yanks) and get it from the unnamed register
     vim.cmd('normal! "vy')
     -- Get the selected text in visual mode
@@ -107,7 +128,7 @@ vim.keymap.set("v", "<leader>!", function()
 end, { desc = "Search and replace selected text" })
 
 -- Begin replacement in current to end of file with selected text
-vim.keymap.set("v", "<leader>:", function()
+vim.keymap.set("v", "<leader>$", function()
     -- Yank the selected text (without affecting other yanks) and get it from the unnamed register
     vim.cmd('normal! "vy')
     -- Get the selected text in visual mode
@@ -143,33 +164,3 @@ if vim.fn.has("persistent_undo") == 1 then
     vim.opt.undodir = target_path
     vim.opt.undofile = true
 end
-
-------------------------------------------------------
----          Saves and loads last session
-------------------------------------------------------
-
-local save_session = function()
-    -- Automatically save the session when exiting Neovim
-    local fn = vim.fn
-
-    -- Function to check directory and create if it doesn't exist
-    local nvim_dir = fn.expand("C:\\Users\\33634\\.config\\nvim")
-    if fn.isdirectory(nvim_dir) == 0 then
-        fn.mkdir(nvim_dir, "p")
-    end
-
-    vim.cmd("mksession! C:\\Users\\33634\\.config\\nvim\\session.vim")
-end
-
-vim.keymap.set("n", "<leader>ss", save_session)
-
-local load_session = function()
-    -- Automatically load the session when starting Neovim
-    local session_file = vim.fn.expand("C:\\Users\\33634\\.config\\nvim\\session.vim")
-
-    if vim.fn.filereadable(session_file) == 1 then
-        vim.cmd("source " .. session_file)
-    end
-end
-
-vim.keymap.set("n", "<leader>sl", load_session)

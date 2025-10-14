@@ -33,7 +33,7 @@ return {
                 },
                 git_status = {
                     symbols = {
-                        unstaged  = "", -- Remove red square
+                        unstaged = "", -- Remove red square
                     },
                 },
             },
@@ -68,6 +68,5 @@ return {
         })
 
         vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', {})
-
     end
 }
