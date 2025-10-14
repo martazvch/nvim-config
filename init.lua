@@ -17,15 +17,9 @@ require("diagnostics")
 -- Allow to move selected lines up and down
 require("lazy").setup("plugins")
 
--- Must be initialized after lsp
--- require("lsp_lines").setup()
-
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
---require("telescope").load_extension("fzf")
-
 -- Default theme
 vim.cmd.colorscheme("kanagawa-wave")
+-- vim.cmd('colorscheme github_dark')
 
 -- Blink theme
 local k = require("kanagawa.colors").setup({ theme = "wave" })

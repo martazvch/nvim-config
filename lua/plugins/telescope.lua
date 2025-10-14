@@ -3,7 +3,7 @@ local action_state = require("telescope.actions.state")
 return {
     {
         "nvim-telescope/telescope.nvim",
-        tag = "0.1.6",
+        branch = "0.1.x",
         dependencies = {
             "nvim-lua/plenary.nvim",
             { "nvim-telescope/telescope-fzf-native.nvim",     build = "make" },
@@ -34,7 +34,6 @@ return {
 
             telescope.setup({
                 defaults = {
-                    layout_strategy = "center",
                     mappings = {
                         i = {
                             ["<A-a>"] = function(prompt_bufnr)

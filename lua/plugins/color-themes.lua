@@ -18,7 +18,6 @@ return {
                             ["@parameter"] = { fg = colors.flamingo },
                             ["@lsp.type.enumMember"] = { fg = "#81c8be" },
                             BlinkCmpMenuSelection = { bg = colors.surface0 },
-                            -- BlinkCmpDoc = { bg = colors.surface1 },
                         }
                     end,
                 },
@@ -51,14 +50,9 @@ return {
                 overrides = function(colors)
                     local theme = colors.theme
                     local k = require("kanagawa.colors").setup({ theme = "wave" })
-                    local p = k.palette
 
                     return {
                         Boolean = { bold = false },
-                        -- NormalFloat = { bg = p.sumiInk3 },
-                        -- FloatBorder = { bg = "none" },
-                        -- FloatBorder = { fg = p.sumiInk2, bg = p.sumiInk3 },
-                        -- FloatTitle = { bg = "none" },
                         ["@keyword.exception"] = { link = "@lsp.type.keyword", bold = false },
                         ["@string.escape"] = { bold = false },
                         ["@lsp.type.enumMember.zig"] = { link = "@lsp.type.property.zig" },
