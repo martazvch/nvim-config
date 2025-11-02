@@ -55,8 +55,13 @@ return {
                         Boolean = { bold = false },
                         ["@keyword.exception"] = { link = "@lsp.type.keyword", bold = false },
                         ["@string.escape"] = { bold = false },
-                        ["@lsp.type.enumMember.zig"] = { link = "@lsp.type.property.zig" },
                         ["@keyword.return.zig"] = { link = "@lsp.type.keyword" },
+                        ["@lsp.type.property.zig"] = { link = "@variable.zig" },
+                        ["@variable.member.zig"] = { link = "@variable.zig" },
+
+                        ["@lsp.type.enumMember.zig"] = { fg = "#E6C384" },
+                        -- Colors unions and structure fields
+                        -- ["@lsp.typemod.property.declaration.zig"] = { fg = "#E6C384" },
 
                         -- Save an hlgroup with dark background and dimmed foreground
                         -- so that you can use it where your still want darker windows.

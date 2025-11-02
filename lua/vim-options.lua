@@ -107,15 +107,28 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
 else
     vim.keymap.set("n", "<M-&>", "<C-w>h")
     vim.keymap.set("n", "<M-é>", "<C-w>l")
+    vim.keymap.set("n", "<M-S-&>", "<C-w>H")
+    vim.keymap.set("n", "<M-S-é>", "<C-w>L")
+    vim.keymap.set("n", "<M-\">", "<C-w>j")
+    vim.keymap.set("n", "<M-'>", "<C-w>k")
 end
 
 -- Insert new lines
 vim.keymap.set({ "n", "v" }, "<M-o>", "m`o<Esc>0D``")
 vim.keymap.set({ "n", "v" }, "<M-O>", "m`O<Esc>0D``")
 
+---------------
+-- Replacement
+---------------
+
 -- Begin replacement with word under cursor until EOF or whole file
-vim.keymap.set("n", "<leader>ù", ":,$s/<C-r><C-w>/")
-vim.keymap.set("n", "<leader>$", ":%s/<C-r><C-w>/")
+vim.keymap.set("n", "<leader>$", ":,$s/<C-r><C-w>/")
+vim.keymap.set("n", "<leader>ù", ":%s/<C-r><C-w>/")
+
+-- With word boundary
+vim.keymap.set("n", "<leader>b$", ":,$s/\\<<C-r><C-w>\\>/")
+vim.keymap.set("n", "<leader>bù", ":%s/\\<<C-r><C-w>\\>/")
+
 
 -- Begin replacement in all file with selected text
 vim.keymap.set("v", "<leader>ù", function()
@@ -136,6 +149,42 @@ vim.keymap.set("v", "<leader>$", function()
     -- Enter command-line mode and pre-fill with search and replace text
     vim.api.nvim_feedkeys(":,$s/" .. selected_text .. "/", "n", false)
 end, { desc = "Search and replace selected text" })
+
+
+-- With word boundary
+-- Begin replacement in all file with selected text
+vim.keymap.set("v", "<leader>bù", function()
+    -- Yank the selected text (without affecting other yanks) and get it from the unnamed register
+    vim.cmd('normal! "vy')
+    -- Get the selected text in visual mode
+    local selected_text = vim.fn.escape(vim.fn.getreg('"'), "/\\")
+    -- Enter command-line mode and pre-fill with search and replace text
+    vim.api.nvim_feedkeys(":%s/\\<" .. selected_text .. "\\>/", "n", false)
+end, { desc = "Search and replace selected text" })
+
+-- Begin replacement in current to end of file with selected text
+vim.keymap.set("v", "<leader>b$", function()
+    -- Yank the selected text (without affecting other yanks) and get it from the unnamed register
+    vim.cmd('normal! "vy')
+    -- Get the selected text in visual mode
+    local selected_text = vim.fn.escape(vim.fn.getreg('"'), "/\\")
+    -- Enter command-line mode and pre-fill with search and replace text
+    vim.api.nvim_feedkeys(":,$s/\\<" .. selected_text .. "\\>/", "n", false)
+end, { desc = "Search and replace selected text" })
+
+-- Goes from: `foo.bar.call(arg)` to `arg`
+vim.keymap.set("n", "<leader>df", "df(f)x")
+
+
+----------
+-- Search
+----------
+-- Start searching with word boundary
+if vim.loop.os_uname().sysname == "Windows_NT" then
+    vim.keymap.set("n", "<A-/>", "/\\<\\><left><left>")
+else
+    vim.keymap.set("n", "<S-A-:>", "/\\<\\><left><left>")
+end
 
 -- Exit terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
