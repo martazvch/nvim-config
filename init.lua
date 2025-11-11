@@ -55,6 +55,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "TextChanged", "TextCh
         local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 
         for i, line in ipairs(lines) do
+            -- Skip commented lines (starting with //, ignoring whitespace)
+            if line:match("^%s*//") then
+                goto continue
+            end
+
             -- Pattern 1: simple .Tag
             local start = 1
             while true do
@@ -83,6 +88,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "TextChanged", "TextCh
                 end
                 start = e + 1
             end
+
+            ::continue::
         end
     end,
 })

@@ -117,6 +117,12 @@ end
 vim.keymap.set({ "n", "v" }, "<M-o>", "m`o<Esc>0D``")
 vim.keymap.set({ "n", "v" }, "<M-O>", "m`O<Esc>0D``")
 
+-- Move lines around
+vim.keymap.set("n", "<C-j>", ":m .+1<CR>==", { silent = true })
+vim.keymap.set("n", "<C-k>", ":m .-2<CR>==", { silent = true })
+vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { silent = true })
+
 ---------------
 -- Replacement
 ---------------
