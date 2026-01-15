@@ -40,7 +40,7 @@ vim.cmd("hi Beacon guibg=grey")
 
 vim.filetype.add({
     extension = {
-        rv = "rust",
+        ray = "rust",
     },
 })
 
@@ -96,3 +96,22 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "TextChanged", "TextCh
 
 -- Kanagawa Wave highlight
 vim.api.nvim_set_hl(0, "ZigEnumLiteral", { fg = "#E6C384", bold = false })
+
+-- autocmds
+vim.api.nvim_create_autocmd('BufWinEnter', {
+    pattern = { '*.md' },
+    callback = function()
+        vim.keymap.set({ "n", "o", "x" }, "j", "gj", {})
+        vim.keymap.set({ "n", "o", "x" }, "k", "gk", {})
+        vim.cmd([[set wrap]])
+    end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufWinLeave' }, {
+    pattern = { '*.md' },
+    callback = function()
+        vim.keymap.set({ "n", "o", "x" }, "j", "j", {})
+        vim.keymap.set({ "n", "o", "x" }, "k", "k", {})
+        vim.cmd([[unset wrap]])
+    end,
+})

@@ -91,6 +91,9 @@ vim.keymap.set("x", "p", '"_dP')
 vim.keymap.set("n", "c", '"_c')
 vim.keymap.set("n", "C", '"_C')
 
+-- Select until end of line without \n
+vim.keymap.set("n", "v$", "vg_")
+
 -- Inlay hint toggle
 vim.keymap.set({ "n", "v" }, "<leader>hi", ":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>")
 
@@ -128,12 +131,12 @@ vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { silent = true })
 ---------------
 
 -- Begin replacement with word under cursor until EOF or whole file
-vim.keymap.set("n", "<leader>$", ":,$s/<C-r><C-w>/")
-vim.keymap.set("n", "<leader>ù", ":%s/<C-r><C-w>/")
+vim.keymap.set("n", "<leader>$", ":,$s/\\<<C-r><C-w>\\>/")
+vim.keymap.set("n", "<leader>ù", ":%s/\\<<C-r><C-w>\\>/")
 
--- With word boundary
-vim.keymap.set("n", "<leader>b$", ":,$s/\\<<C-r><C-w>\\>/")
-vim.keymap.set("n", "<leader>bù", ":%s/\\<<C-r><C-w>\\>/")
+-- With no word boundary
+vim.keymap.set("n", "<leader>b$", ":,$s/<C-r><C-w>/")
+vim.keymap.set("n", "<leader>bù", ":%s/<C-r><C-w>/")
 
 
 -- Begin replacement in all file with selected text

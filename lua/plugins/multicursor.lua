@@ -39,6 +39,12 @@ return {
         -- Add a cursor to every search result in the buffer.
         set("n", "<leader>/A", mc.searchAllAddCursors)
 
+        -- Split cursors
+        set("x", "<C-s>", mc.splitCursors)
+
+        -- Match new cursors within visual selections by regex.
+        set("x", "<C-m>", mc.matchCursors)
+
         -- Disable and enable cursors.
         -- set({"n", "x"}, "<c-q>", mc.toggleCursor)
 
