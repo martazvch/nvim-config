@@ -134,10 +134,10 @@ return {
             )
 
             local lgas = require("telescope-live-grep-args.shortcuts")
-            vim.keymap.set("n", "tsG", lgas.grep_word_under_cursor)
-            vim.keymap.set("v", "tsG", lgas.grep_visual_selection)
-            vim.keymap.set("n", "tsg", lgas.grep_word_under_cursor_current_buffer)
-            vim.keymap.set("v", "tsg", lgas.grep_word_visual_selection_current_buffer)
+            vim.keymap.set("n", "tuG", lgas.grep_word_under_cursor)
+            vim.keymap.set("v", "tuG", lgas.grep_visual_selection)
+            vim.keymap.set("n", "tug", lgas.grep_word_under_cursor_current_buffer)
+            vim.keymap.set("v", "tug", lgas.grep_word_visual_selection_current_buffer)
         end,
     },
 }
