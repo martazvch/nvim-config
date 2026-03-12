@@ -33,6 +33,7 @@ vim.api.nvim_create_user_command('RGReplace', function(opts)
     vim.cmd('cfdo %s/' .. pattern .. '/' .. replacement .. '/gc | update')
 end, { nargs = '+' })
 
+-- Disables auto-comments
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function()
@@ -55,7 +56,6 @@ local function smart_insert()
     end
 end
 
--- expr = true says that it is an expression to evaluate
 vim.keymap.set("n", "i", smart_insert, { expr = true })
 
 -- Line concat
@@ -112,8 +112,8 @@ else
     vim.keymap.set("n", "<M-é>", "<C-w>l")
     vim.keymap.set("n", "<M-S-&>", "<C-w>H")
     vim.keymap.set("n", "<M-S-é>", "<C-w>L")
-    vim.keymap.set("n", "<M-\">", "<C-w>j")
-    vim.keymap.set("n", "<M-'>", "<C-w>k")
+    vim.keymap.set("n", "<M-\">", "<C-w>k")
+    vim.keymap.set("n", "<M-'>", "<C-w>j")
 end
 
 -- Insert new lines

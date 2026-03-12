@@ -16,8 +16,10 @@ return {
                         return {
                             ["@keyword.self"] = { fg = colors.mauve },
                             ["@parameter"] = { fg = colors.flamingo },
-                            ["@lsp.type.enumMember"] = { fg = "#81c8be" },
-                            BlinkCmpMenuSelection = { bg = colors.surface0 },
+                            -- ["@lsp.type.enumMember"] = { fg = "#81c8be" },
+                            ["@lsp.type.parameter"] = { fg = colors.flamingo },
+                            ["@variable.parameter"] = { fg = colors.flamingo },
+                            -- BlinkCmpMenuSelection = { bg = colors.surface0 },
                         }
                     end,
                 },
