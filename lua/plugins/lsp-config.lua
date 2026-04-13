@@ -40,7 +40,7 @@ return {
             -- Mason installs binaries in this path
             local bin_path = vim.fn.stdpath("data") .. "/mason/bin/"
 
-            -- Lua LS
+            -- Lua
             vim.lsp.config("lua_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -48,7 +48,7 @@ return {
             })
             vim.lsp.enable("lua_ls")
 
-            -- Zig LS
+            -- Zig
             vim.lsp.config("zls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -68,6 +68,13 @@ return {
                     })
                 end,
             })
+
+            -- C
+            vim.lsp.config("clangd", {
+                capabilities = capabilities,
+                on_attach = on_attach,
+            })
+            vim.lsp.enable("clangd")
 
             -- Python
             vim.lsp.config("pyright", {

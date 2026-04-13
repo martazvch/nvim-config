@@ -1,12 +1,18 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    branch = "main",
     config = function()
-        local configs = require("nvim-treesitter.configs")
-        configs.setup({
+        require("nvim-treesitter").setup({
             auto_install = true,
-            highlight = { enable = true },
-            indent = { enable = true, disable = { "zig" } }, -- dosen't work well with zig...
+            ensure_installed = { "zig", "markdown", "markdown_inline" },
+        })
+
+        -- Enable treesitter highlighting for filetypes not covered by nvim's own ftplugins
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function(ev)
+                pcall(vim.treesitter.start, ev.buf)
+            end,
         })
     end,
 }

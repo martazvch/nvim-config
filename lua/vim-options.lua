@@ -19,6 +19,8 @@ vim.opt.fillchars = "eob: "
 vim.opt.clipboard = "unnamedplus"
 vim.keymap.set("i", "<C-v>", "<C-R>*")
 
+vim.opt.splitright = true
+
 -- Use rg when using :grep!
 vim.o.grepprg = "rg --vimgrep --no-heading --smart-case"
 
@@ -77,6 +79,8 @@ vim.keymap.set("n", "cp", "yap}p")
 vim.keymap.set("n", "dp", "^d}")
 -- Copy paragraphe
 vim.keymap.set("n", "yp", "^y}")
+-- Copy all file
+vim.keymap.set("n", "<leader>y", "goyG<C-o>")
 
 -- Copies the lines, comment it and paste it under
 -- It's a command as "yygccp" would be treated as a string

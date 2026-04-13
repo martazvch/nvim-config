@@ -1,6 +1,6 @@
 return {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim", },
     config = function()
         -- local auto = require("lualine.themes.auto")
         -- local lualine_modes = { "insert", "normal", "visual", "command", "replace", "inactive", "terminal" }
@@ -11,19 +11,19 @@ return {
         -- end
 
         -------- CATPUCCIN -----------
-        local catppuccin = require("lualine.themes.catppuccin")
-        -- Colors of 'Normal' highlight group for catppuccin frappe
-        catppuccin.normal.c.fg = "#c6d0f5"
-        catppuccin.normal.c.bg = "#303446"
-
-        catppuccin.inactive.a.bg = "#303446"
-        catppuccin.inactive.b.bg = "#303446"
-        catppuccin.inactive.c.bg = "#303446"
+        -- local catppuccin = require("lualine.themes.catppuccin")
+        -- local catppuccin = require("catppuccin")
+        -- -- Colors of 'Normal' highlight group for catppuccin frappe
+        -- catppuccin.normal.c.fg = "#c6d0f5"
+        -- catppuccin.normal.c.bg = "#303446"
+        --
+        -- catppuccin.inactive.a.bg = "#303446"
+        -- catppuccin.inactive.b.bg = "#303446"
+        -- catppuccin.inactive.c.bg = "#303446"
 
         -------- KANAGAWA ---------
         local kcolors = require("kanagawa.colors").setup({ theme = "wave" })
         local palette = kcolors.palette
-        local theme = kcolors.theme
 
         require("lualine").setup({
             options = {
@@ -68,8 +68,8 @@ return {
                 lualine_c = {
                     {
                         "filetype",
-                        colored = true, -- Displays filetype icon in color if set to true
-                        icon_only = true, -- Display only an icon for filetype
+                        colored = true,             -- Displays filetype icon in color if set to true
+                        icon_only = true,           -- Display only an icon for filetype
                         icon = { align = "right" }, -- Display filetype icon on the right hand side
                     },
                     { "filename" },
