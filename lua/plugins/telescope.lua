@@ -34,6 +34,17 @@ return {
 
             telescope.setup({
                 defaults = {
+                    file_ignore_patterns = { "zig%-pkg/" },
+                    vimgrep_arguments = {
+                        "rg",
+                        "--color=never",
+                        "--no-heading",
+                        "--with-filename",
+                        "--line-number",
+                        "--column",
+                        "--smart-case",
+                        "--glob=!zig-pkg/**",
+                    },
                     mappings = {
                         i = {
                             ["<A-a>"] = function(prompt_bufnr)
@@ -117,7 +128,7 @@ return {
             vim.keymap.set("n", "tz", function()
                 builtin.find_files({
                     prompt_title = "Find Zig Files",
-                    find_command = { "rg", "--files", "--glob", "*.zig" },
+                    find_command = { "rg", "--files", "--glob", "*.zig", "--glob", "!zig-pkg/**" },
                 })
             end, { desc = "Search only Zig files" })
 

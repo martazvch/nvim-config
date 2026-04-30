@@ -52,8 +52,8 @@ return {
             vim.lsp.config("zls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
-                settings = { zls = { enable_build_on_save = true } },
                 cmd = { "zls" },
+                settings = { zls = { enable_build_on_save = true } },
             })
             vim.lsp.enable("zls")
 
